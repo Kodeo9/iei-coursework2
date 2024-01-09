@@ -1,7 +1,3 @@
-# COM774 CW2 
-# Prakash Chakraborty
-# B00916260
-
 import numpy as np
 import pandas as pd
 import argparse
@@ -167,10 +163,12 @@ def print_grid_search_attributes(model):
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.model_selection import GridSearchCV
 from sklearn import linear_model
+from sklearn.svm import LinearSVC
 
-from sklearn.tree import DecisionTreeClassifier
-parameters = {'max_depth':np.arange(3,10,2)}
-dt = DecisionTreeClassifier()
-dt_grid = GridSearchCV(dt,param_grid=parameters, n_jobs=-1)
-dt_grid_results = perform_model(dt_grid, X_train, y_train, X_test, y_test, class_labels=labels)
-print_grid_search_attributes(dt_grid_results['model'])
+parameters = {'C':[0.125, 0.5, 1, 2, 8, 16]}
+lr_svc = LinearSVC(tol=0.00005)
+lr_svc_grid = GridSearchCV(lr_svc, param_grid=parameters, n_jobs=-1, verbose=1)
+lr_svc_grid_results = perform_model(lr_svc_grid, X_train, y_train, X_test, y_test, class_labels=labels)
+
+print_grid_search_attributes(lr_svc_grid_results['model'])
+
